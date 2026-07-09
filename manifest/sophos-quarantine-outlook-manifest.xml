@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>21576c29-0c37-4ebe-b795-4a1dac6dc4ee</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Goodwill of Central and Northern Arizona</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Sophos Quarantine"/>
+  <Description DefaultValue="Adds an Outlook ribbon button that opens the Sophos Self-Service Quarantine portal."/>
+  <IconUrl DefaultValue="https://REPLACE-WITH-YOUR-HOST/icons/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://REPLACE-WITH-YOUR-HOST/icons/icon-128.png"/>
+  <SupportUrl DefaultValue="https://ithelp.gwaz.org/"/>
+
+  <AppDomains>
+    <AppDomain>https://cloud.sophos.com</AppDomain>
+    <AppDomain>https://REPLACE-WITH-YOUR-HOST</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.8"/>
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://REPLACE-WITH-YOUR-HOST/outlook/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
+                    xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.8">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="Commands.Url"/>
+
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="SophosQuarantine.ReadGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="SophosQuarantine.ReadButton">
+                  <Label resid="OpenSite.Label"/>
+                  <Supertip>
+                    <Title resid="OpenSite.Label"/>
+                    <Description resid="OpenSite.Description"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSophosQuarantine</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="SophosQuarantine.ComposeGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="SophosQuarantine.ComposeButton">
+                  <Label resid="OpenSite.Label"/>
+                  <Supertip>
+                    <Title resid="OpenSite.Label"/>
+                    <Description resid="OpenSite.Description"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>openSophosQuarantine</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://REPLACE-WITH-YOUR-HOST/icons/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://REPLACE-WITH-YOUR-HOST/icons/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://REPLACE-WITH-YOUR-HOST/icons/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://REPLACE-WITH-YOUR-HOST/outlook/function-file.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GroupLabel" DefaultValue="Sophos"/>
+        <bt:String id="OpenSite.Label" DefaultValue="Open Quarantine"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="OpenSite.Description" DefaultValue="Open the Sophos Self-Service Quarantine portal in your default browser."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
