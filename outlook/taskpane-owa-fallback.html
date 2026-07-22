@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sophos Quarantine</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; color: #222; }
+    button {
+      background: #0066cc;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    a { color: #0066cc; }
+    .note { margin-top: 12px; color: #555; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <p id="status">Attempting to open Sophos Self-Service Quarantine...</p>
+  <p>If nothing opens automatically, use the button below.</p>
+  <p><button id="open-btn" type="button">Open Sophos Self-Service Quarantine</button></p>
+  <p><a href="https://cloud.sophos.com/manage/self-service" target="_blank" rel="noopener noreferrer">Open in a new tab</a></p>
+  <p class="note">This fallback is intended for OWA and New Outlook testing.</p>
+  <script>
+    const targetUrl = 'https://cloud.sophos.com/manage/self-service';
+    function openSophos() {
+      const win = window.open(targetUrl, '_blank');
+      if (win) {
+        try { win.opener = null; } catch (e) {}
+        document.getElementById('status').textContent = 'Sophos should now be opening in a new tab or window.';
+      } else {
+        document.getElementById('status').textContent = 'Your browser or Outlook host blocked the automatic launch. Use the button or link below.';
+      }
+    }
+    document.getElementById('open-btn').addEventListener('click', openSophos);
+    window.addEventListener('load', function () {
+      setTimeout(openSophos, 150);
+    });
+  </script>
+</body>
+</html>
