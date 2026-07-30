@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sophos Quarantine</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+  <p>This add-in opens the Sophos Self-Service Quarantine portal.</p>
+
+  <button id="openSophos" type="button">
+    Open Sophos Self-Service Quarantine
+  </button>
+
+  <p>
+    <a id="fallbackLink" target="_blank" rel="noopener noreferrer">
+      Open using a link instead
+    </a>
+  </p>
+
+  <script>
+    (() => {
+      const targetUrl = "https://cloud.sophos.com/manage/self-service";
+
+      function openSophos() {
+        const popup = window.open(
+          targetUrl,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+        if (!popup) {
+          document.getElementById("fallbackLink").style.display = "inline";
+        }
+      }
+
+      function initialize() {
+        const button = document.getElementById("openSophos");
+        const fallbackLink = document.getElementById("fallbackLink");
+
+        fallbackLink.href = targetUrl;
+        button.addEventListener("click", openSophos);
+
+        setTimeout(openSophos, 150);
+      }
+
+      Office.onReady(initialize);
+    })();
+  </script>
+</body>
+</html>
